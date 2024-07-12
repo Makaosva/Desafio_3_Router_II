@@ -1,60 +1,88 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-
-const POKES_URL = "https://pokeapi.co/api/v2/pokemon?limit=10000";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 function Pokemones() {
-  const [lista, setLista] = useState([]);
+  const POKES_URL = "https://pokeapi.co/api/v2/pokemon";
+  const [pokemones, setPokemones] = useState([]);
   const [seleccionado, setSeleccionado] = useState();
-  const navigate = useNavigate;
-
-  const setActiveClass = ({ isActive }) =>
-    isActive ? "active text-decoration-none p-3" : undefined;
+  const [loading, setLoading] = useState(true);
+  const limit = 20; //resultados por pagina
+  const [offset, setOffset] = useState(0);
+  const navigate = useNavigate();
 
   const obtenerPokemones = async () => {
-    const respuesta = await fetch(POKES_URL);
-    const datos = await respuesta.json();
-    setLista(datos.results);
-  };
-
-  console.log("lista-->", lista);
-  console.log("setLista-->", setLista);
-
-  const irAPokemonDetalle = () => {
-    if (seleccionado) {
-      navigate(`/pokemones/${seleccionado}`);
-    } else {
-      alert("Debes seleccionar un pokemon");
-    }
+    const res = await fetch(`${POKES_URL}?offset=${offset}&limit=${limit}`);
+    const data = await res.json();
+    setPokemones(data.results);
+    setLoading(false);
   };
 
   useEffect(() => {
     obtenerPokemones();
-  }, []);
+  }, [offset]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  console.log("pokemones-->", pokemones);
+  console.log("seleccionado-->", seleccionado);
+
+  const irAPokemonDetalle = () => {
+    if (seleccionado) {
+      console.log("dentro if");
+      navigate(`/pokemones/${seleccionado}`);
+    } else {
+      console.log("dentro else");
+      alert("Debes seleccionar un pokemon");
+    }
+  };
+
+  const handleNextPage = () => {
+    setOffset(offset + limit); // Aumentar el valor del offset para la siguiente página
+  };
+
+  const handlePrevPage = () => {
+    if (offset > 0) {
+      setOffset(offset - limit); // Disminuir el valor del offset para la página anterior
+    }
+  };
 
   const handleSelect = (e) => {
     setSeleccionado(e.target.value);
   };
 
+  const rangeStart = offset + 1;
+  const rangeEnd = offset + pokemones.length;
+
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center">
-      <h1>Selecciona un Pokemon</h1>
-      <select className="m-3" onChange={handleSelect}>
-        <option hidden>Selecciona un pokemon</option>
-        {lista.map((item) => {
-          return (
-            <option key={item.id} value={item.name}>
-              {lista.indexOf(item) + 1} -{" "}
-              {item.name[0].toUpperCase() + item.name.substr(1)}
-            </option>
-          );
-        })}
-      </select>
-      <button className="btn btn-secondary" onClick={irAPokemonDetalle}>
-        <NavLink className={setActiveClass} to={"pokemones/"}>
+    <div>
+      <div className="d-flex flex-column align-items-center justify-content-center">
+        <h1>Selecciona un Pokemon</h1>
+        <select className="m-3" onChange={handleSelect}>
+          <option hidden>Selecciona un pokemon</option>
+          {pokemones.map((pokemon) => {
+            return (
+              <option key={pokemon.id} value={pokemon.name}>
+                {pokemones.indexOf(pokemon) + 1} -{" "}
+                {pokemon.name[0].toUpperCase() + pokemon.name.substr(1)}
+              </option>
+            );
+          })}
+        </select>
+        <button className="btn btn-secondary" onClick={irAPokemonDetalle}>
           Ver Detalle
-        </NavLink>
-      </button>
+        </button>
+      </div>
+      <br />
+      <div className="pagination d-flex justify-content-center align-items-center">
+        <button onClick={handlePrevPage} disabled={offset === 0}>
+          Anterior
+        </button>
+        <span>{`${rangeStart}-${rangeEnd}`}</span>
+        <button onClick={handleNextPage}>Siguiente</button>
+      </div>
     </div>
   );
 }
