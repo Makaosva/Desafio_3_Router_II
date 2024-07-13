@@ -11,7 +11,7 @@ h1 {
 }
 
 .active {
-  color: yellow;
+  color: yellow !important;
   font-weight: bold;
 }
 
@@ -21,10 +21,9 @@ NavLink {
 }
 
 .photo img {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 30px 100px 100px 100px;
+  max-width: 500px;
+  background-color: #fff;
+  border-radius: 10px;
 }
 
 .icono {
@@ -39,9 +38,20 @@ NavLink {
 }
 
 .mt-5 {
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
 
 .mb-4 {
   margin-bottom: 1.5rem;
+}
+
+.poke-card {
+  max-width: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  margin: 10px auto;
+  cursor: pointer;
 }

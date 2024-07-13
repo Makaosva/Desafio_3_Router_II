@@ -3,11 +3,10 @@ import { Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 function NavbarPokemon() {
-  const setActiveClass = ({ isActive }) =>
-    isActive ? "active text-decoration-none p-3" : undefined;
+  const setActiveClass = ({ isActive }) => (isActive ? "active" : undefined);
 
   return (
-    <Navbar bg="secondary" data-bs-theme="ligth">
+    <Navbar bg="secondary" variant="dark" expand="lg">
       <Navbar.Brand>
         {" "}
         <img className="icono" src="../pokebola.png" alt="" />{" "}
@@ -15,12 +14,12 @@ function NavbarPokemon() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav className="mr-auto">
-          <NavLink className={setActiveClass} to="/">
+          <Nav.Link as={NavLink} to="/" exact className={setActiveClass}>
             Home
-          </NavLink>
-          <NavLink className={setActiveClass} to="/pokemones">
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/pokemones" className={setActiveClass}>
             Pokemones
-          </NavLink>
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -40,7 +40,9 @@ function Pokemones() {
   };
 
   const handleNextPage = () => {
-    setOffset(offset + limit); // Aumentar el valor del offset para la siguiente página
+    if (offset < 1300) {
+      setOffset(offset + limit); // Aumentar el valor del offset para la siguiente página
+    }
   };
 
   const handlePrevPage = () => {
@@ -55,6 +57,10 @@ function Pokemones() {
 
   const rangeStart = offset + 1;
   const rangeEnd = offset + pokemones.length;
+  console.log("rangeEnd", rangeEnd);
+  console.log("typeOf rangeEnd", typeof rangeEnd);
+  console.log("offset", offset);
+  console.log("typeOff offset", typeof offset);
 
   return (
     <div>
@@ -80,8 +86,10 @@ function Pokemones() {
         <button onClick={handlePrevPage} disabled={offset === 0}>
           Anterior
         </button>
-        <span>{`${rangeStart}-${rangeEnd}`}</span>
-        <button onClick={handleNextPage}>Siguiente</button>
+        <span className="p-2">{`${rangeStart}-${rangeEnd}`}</span>
+        <button onClick={handleNextPage} disabled={offset === 1300}>
+          Siguiente
+        </button>
       </div>
     </div>
   );
