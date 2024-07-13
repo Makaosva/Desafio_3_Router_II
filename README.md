@@ -1,8 +1,21 @@
-# React + Vite
+# Desafio 3 - Maestro Pokemon - React II
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## Descripción
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+En este desafío pondremos a prueba tus nuevas habilidades con React Router para consolidar el redireccionamiento de rutas, la obtención de parámetros en una ruta y la asignación de una clase activa a la ruta que se esté visitando en una SPA.
+
+---
+
+### Requerimientos
+
+1. Asignar una clase active a la ruta que el usuario consulte usando NavLink.
+
+2. Redireccionar programáticamente al usuario usando el hook useNavigate.
+
+3. Obtener parámetros de la URL usando el hook useParams.
+
+---
+
+⌨️Escrito con ❤️ y [Macarena Osses](https://github.com/Makaosva)
